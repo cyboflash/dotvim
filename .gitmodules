@@ -4,9 +4,6 @@
 [submodule "bundle/project"]
 	path = bundle/project
 	url = https://github.com/vimplugin/project.vim.git
-[submodule "bundle/omnicppcomplete"]
-	path = bundle/omnicppcomplete
-	url = https://github.com/vim-scripts/OmniCppComplete.git
 [submodule "bundle/L9"]
 	path = bundle/L9
 	url = https://github.com/vim-scripts/L9.git
