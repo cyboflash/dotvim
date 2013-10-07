@@ -250,18 +250,18 @@ autocmd BufReadPost *
 " =============================================================================
 "
 " -------------------------------- airline----------------------------------
-" airline theme
-" let g:airline_theme = 'serene'
+" theme
+let g:airline_theme = 'serene'
 
 " enable/disable automatic population of the `g:airline_symbols` dictionary
 " with powerline symbols.
-" let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=1
 
  " -------------------------------- tcomment ----------------------------------
  "  Setup line comment for .c files
-" let g:tcommentLineC = {
- "            \ 'commentstring': '// %s',
-  "           \ }
+let g:tcommentLineC = {
+            \ 'commentstring': '// %s',
+            \ }
 
 " --------------------------------- project -----------------------------------
 " i - Display the filename and the current working directory in the command
@@ -282,44 +282,44 @@ let g:proj_flags='imsSgtc'
 
 " --------------------------------- tagbar ----------------------------------
 " Automatically close tagbar window when a jump is made to a tag
-" let g:tagbar_autoclose = 1
+let g:tagbar_autoclose = 1
 " Move the cursor to the tagbar window after it is opened
-" let g:tagbar_autofocus = 1
+let g:tagbar_autofocus = 1
 " Sort the tags by name
-" let g:tagbar_sort = 1
+let g:tagbar_sort = 1
 " Open folds if the tag is inside of it
-" let g:tagbar_autoshowtag = 1
+let g:tagbar_autoshowtag = 1
 " Open all folds
-" let g:tagbar_foldlevel = 99
+let g:tagbar_foldlevel = 99
 " Set the width of the tagbar window
-" let g:tagbar_width = 60
+let g:tagbar_width = 60
 
 " --------------------------------- ctrlp ----------------------------------
 " Show the match window on top, order of matches: top to bottom
 " minimum match window height: 1, maximum match window height: 30
-" let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
 " Use a tag extension
-" let g:ctrlp_extensions = ['tag']
+let g:ctrlp_extensions = ['tag']
 
 " ------------------------------- omnicppcomplete -----------------------------
 " What to do with an item, after OmniCppComplete menu poped out
 " 0 - don't select the first item.
 " 1 - select the first itme and insert it to the text.
 " 2 - select the first itme but do not insert it to the text.
-" let OmniCpp_SelectFirstItem = 2
+let OmniCpp_SelectFirstItem = 2
 " Should the scope of the match be shown first when menu pops out?
 " 0 - show the scope of the match last
 " 1 - show the scope of the match first
-" let OmniCpp_ShowScopeInAbbr = 0
+let OmniCpp_ShowScopeInAbbr = 0
 " Show prototype of the function in the abbreviation.
 " 0 - don't show the prototype of the function in the abbreviation.
 " 1 - show the prototype of the function in the abbreviation.
-" let OmniCpp_ShowPrototypeInAbbr = 1
+let OmniCpp_ShowPrototypeInAbbr = 1
 " This option allows to show/hide the access information ('+', '#', '-') in the
 " popup menu.
 " 0 = hide access
 " 1 = show access
-" let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowAccess = 1
 
 " ======================================================================
 " ============================ mappings ================================
@@ -353,11 +353,11 @@ nnoremap <silent><C-F11> :make rebuild<cr>:copen<cr>
 nnoremap <silent><M-F11> :make final<cr>:copen<cr>
 
 " Toggle the Tlist window using <F4>
-" nnoremap <silent><F4> :TagbarToggle<cr>
+nnoremap <silent><F4> :TagbarToggle<cr>
 
-" nnoremap <leader>fm :CtrlPMixed<cr>
-" nnoremap <leader>ff :CtrlP g:prj_root_8dot3<cr>
-" nnoremap <leader>ft :CtrlPTag<cr>
+nnoremap <leader>fm :CtrlPMixed<cr>
+nnoremap <leader>ff :CtrlP g:prj_root_8dot3<cr>
+nnoremap <leader>ft :CtrlPTag<cr>
 
 " Map sourcing of .vimrc file.
 nnoremap <silent><leader>sv :source $VIMHOME/vimrc<cr>
