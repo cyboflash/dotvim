@@ -321,6 +321,10 @@ let OmniCpp_ShowPrototypeInAbbr = 1
 " 1 = show access
 let OmniCpp_ShowAccess = 1
 
+" Autoclose the preview window after the match is found.
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 " ======================================================================
 " ============================ mappings ================================
 " ======================================================================
