@@ -106,7 +106,15 @@ if has("autocmd")
           \  endif
 
   " Remove trailing whtiespace upon saving
-  autocmd BufWritePre *.c,*.h,*.mtd,*.md,*.vim :call StripTrailingWhitespaces()
+  autocmd BufWritePre *
+        \ if &ft == "c"      ||
+        \    &ft == "make"   ||
+        \    &ft == "python" ||
+        \    &ft == "cpp"    ||
+        \    &ft == "mdl"    ||
+        \    &ft == "vim"
+        \ | call StripTrailingWhitespaces() | endif
+
 endif
 
 " =============================================================================
@@ -191,6 +199,7 @@ let g:clang_snippets = 1
 let g:clang_snippets_engine = "clang_complete"
 
 let g:clang_library_path = "C:\\Program\ Files\ (x86)\\LLVM\ 3.4.svn\\bin"
+
 " ------------------------------- omnicppcomplete -----------------------------
 " What to do with an item, after OmniCppComplete menu poped out
 " 0 - don't select the first item.
@@ -214,6 +223,7 @@ let OmniCpp_ShowAccess = 1
 " Autoclose the preview window after the match is found.
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 
 " ======================================================================
 " ============================ mappings ================================
@@ -265,10 +275,12 @@ nnoremap <silent><M-F10> :clast<cr>
 nnoremap <silent><leader>mm :set lines=999 columns=999<cr>
 nnoremap <silent><leader>mn :set lines=999 columns=80<cr>
 
-nnoremap <silent><F12> :YRShow<CR>
+nnoremap <silent><F6> :YRShow<CR>
+
+nnoremap <silent><F5> :GundoToggle<CR>
 
 nnoremap <leader>v :call VimGrep(expand('<cword>'), g:prj_dirs, 0)<cr>
-command! -nargs=1 VimGrep :call VimGrep("<args>", g:prj_dirs, 0) | copen | cc
+" command! -nargs=1 VimGrep :call VimGrep("<args>", g:prj_dirs, 0) | copen | cc
 " abbreviate Vim VimGrep
 
 

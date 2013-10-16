@@ -140,7 +140,7 @@ function! VimGrep(pattern, dir_list, is_recursive)
   for dir in a:dir_list
     let l:dir_str .= dir.'/*.* '
   endfor
-  exe ':vim /'.a:pattern.'/g '.l:dir_str
+  exe ':vim /\<'.a:pattern.'\>/g '.l:dir_str
   " Put the screen with a cursor on the center of the screen
   normal zz
 endfunction
