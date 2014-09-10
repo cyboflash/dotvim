@@ -74,7 +74,7 @@ scriptencoding utf-8
 
 " Set the font
 if has('win32')
-  set guifont=Consolas:h9:b:cANSI
+  set guifont=Powerline_Consolas:h9:b:cANSI
 endif
 
 " Remove Menu from GUI
@@ -159,11 +159,17 @@ endif
 "
 " -------------------------------- airline----------------------------------
 " theme
-let g:airline_theme = 'serene'
+let g:airline_theme = 'jellybeans'
 
 " enable/disable automatic population of the `g:airline_symbols` dictionary
 " with powerline symbols.
 let g:airline_powerline_fonts=1
+
+" 'f' Display the full hierarchy of the tag, not just the tag itself.
+let g:airline#extensions#tagbar#flags = 'f'
+
+" Enable iminsert detection.
+let g:airline_detect_iminsert=1
 
  " -------------------------------- tcomment ----------------------------------
  "  Setup line comment for .c files
