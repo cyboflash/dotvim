@@ -4,25 +4,53 @@ if has('win32')
   let $VIMHOME = $HOME.'/vimfiles'
 endif
 
+" ================= Required Vundle Setup =======================
+" Disable vi-compatability.
+set nocompatible
+" Disable file type detection
+filetype off
+" Set 'runtime' path to include vundle and initialize
+let &runtimepath .= $VIMHOME.'/.vim/bundle/vundle'
+call vundle#begin()
+
+" Required: let Vunldle manage vundle.
+Plugin 'gmarik/vundle'
+
+" List of the plugins
+
+" L9 library
+Plugin 'eparreno/vim-l9', {'name': 'L9'}
+" Better status line
+Plugin 'bling/vim-airline'
+" Fuzzy file, buffer, most recently used (mru) and tag finder.
+Plugin 'kien/ctrlp.vim', {'name': 'ctrlp'}
+" Visualize Vim undo tree
+Plugin 'sjl/gundo.vim', {'name': 'gundo'}
+" Project manager
+Plugin 'vimplugin/project.vim', {'name': 'project'}
+" Populate the argument list from the files in the quickfix list
+Plugin 'nelstrom/vim-qargs'
+" Quoting/parenthesizing made simple
+Plugin 'tpope/vim-surround'
+" Display tags in a window
+Plugin 'majutsushi/tagbar'
+" An extensible & universal commenting plugin that also handles embedded filetypes
+Plugin 'tomtom/tcomment_vim'
+" Start a * or # search from a visual block
+Plugin 'nelstrom/vim-visual-star-search'
+" Maintains a history of previous yanks, changes and deletes
+Plugin 'vim-scripts/YankRing.vim' {'name': 'yankring'}
+
+" ATTENTION: All of the plugins must be added before the following line
+call vundle#end()
+" Required: enable plugins and indentation based on the file type.
+filetype plugin indent on
+
 let mapleader=","
 
-" ==================== Pathogen plugin ==========================
-" Make sure this line is before file-type/plugin detection is on.
-source $VIMHOME/bundle/pathogen/autoload/pathogen.vim
-
-" ==================== Source myutils ===========================
 source $VIMHOME/bundle/myutils/myutils.vim
-
-" Infect the runtime path.
-call pathogen#infect()
-" Generate help tags for each plugin.
-call pathogen#helptags()
-
 " Create a backup directory
 call InitBackupDir()
-
-" Enable plugins and indentation based on a filetype.
-filetype plugin indent on
 
 " Set the backspace
 " indent - Allow backspacing over autoindent.
@@ -30,14 +58,18 @@ filetype plugin indent on
 " start - Allow backspacing over the start of insert.
 set backspace=indent,eol,start
 
-" Disable vi-compatability
-set nocompatible
-
 " Always show the statusline
 set laststatus=2
 
 " Necessary to show the Unicode glyphs, needed for the vim-powerline plugin.
 set encoding=utf-8
+
+" Make sure this setting is after 'encoding' setting
+" Specify character encoding used in the script. This is needed to make sure
+" that 'listchars' setting displays all the glyphs. If this setting is
+" specified before the 'encoding' setting then glyphs are not displayed
+" properly, vimrc needs to be sourced again.
+scriptencoding utf-8
 
 " Set the font
 if has('win32')
@@ -92,6 +124,9 @@ set hlsearch
 set incsearch
 " Ignore the case during the search.
 set ignorecase
+
+" Print line numbers in the hardcopy
+set printoptions=left:3pc,number:y,syntax:n
 
 " -------------------- cscope setup --------------------------
 set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
@@ -179,26 +214,26 @@ let g:ctrlp_extensions = ['tag']
 " insert it into the code.
 " 2 - Automatically select the first entry in the popup menu, and insert it
 " into the code.
-let g:clang_auto_select = 1
+" let g:clang_auto_select = 1
 " 0 - do not complete after ->, ., ::
 " 1 - automatically complete after ->, ., ::
-let g:clang_complete_auto = 1
+" let g:clang_complete_auto = 1
 " 0 - do not open quickfix window on error.
 " 1 - open quickfix window on error.
-let g:clang_complete_copen = 1
+" let g:clang_complete_copen = 1
 " 0 - do not highlight the warnings and errors
 " 1 - highlight the warnings and errors the same way clang does it
-let g:clang_hl_errors = 0
+" let g:clang_hl_errors = 0
 " 0 - do not do some snippets magic on code placeholders like function argument,
 "     template argument, template parameters, etc.
 " 1 - do some snippets magic on code placeholders like function argument,
 "     template argument, template parameters, etc.
-let g:clang_snippets = 1
+" let g:clang_snippets = 1
 " The snippets engine (clang_complete, ultisnips... see the snippets
 " subdirectory).
-let g:clang_snippets_engine = "clang_complete"
+" let g:clang_snippets_engine = "clang_complete"
 
-let g:clang_library_path = "C:\\Program\ Files\ (x86)\\LLVM\ 3.4.svn\\bin"
+" let g:clang_library_path = "C:\\Program\ Files\ (x86)\\LLVM\ 3.4.svn\\bin"
 
 " ------------------------------- omnicppcomplete -----------------------------
 " What to do with an item, after OmniCppComplete menu poped out
@@ -259,6 +294,7 @@ nnoremap <silent><M-F11> :make final<cr>:copen<cr>
 " Toggle the Tlist window using <F4>
 nnoremap <silent><F4> :TagbarToggle<cr>
 
+nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fm :CtrlPMixed<cr>
 nnoremap <leader>ff :CtrlP g:prj_root_8dot3<cr>
 nnoremap <leader>ft :CtrlPTag<cr>
@@ -279,8 +315,8 @@ nnoremap <silent><F6> :YRShow<CR>
 
 nnoremap <silent><F5> :GundoToggle<CR>
 
-nnoremap <leader>v :call VimGrep(expand('<cword>'), g:prj_dirs, 0)<cr>
-" command! -nargs=1 VimGrep :call VimGrep("<args>", g:prj_dirs, 0) | copen | cc
+nnoremap <leader>v :call VimGrep(expand('<cword>'), g:prj_dirs, 0, 1)<cr>
+command! -nargs=1 VimGrep :call VimGrep("<args>", g:prj_dirs, 0, 0) | copen | cc
 " abbreviate Vim VimGrep
 
 
