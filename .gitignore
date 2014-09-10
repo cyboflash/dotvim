@@ -1,0 +1,6 @@
+# Do not track bundle directory
+bundle/**
+
+# Do not track tmp and backup directories
+tmp/**
+backup/**

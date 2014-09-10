@@ -3,6 +3,7 @@ let $VIMHOME = $HOME.'/.vim'
 if has('win32')
   let $VIMHOME = $HOME.'/vimfiles'
 endif
+let bundle_root = $VIMHOME.'/bundle'
 
 " ================= Required Vundle Setup =======================
 " Disable vi-compatability.
@@ -10,8 +11,8 @@ set nocompatible
 " Disable file type detection
 filetype off
 " Set 'runtime' path to include vundle and initialize
-let &runtimepath .= $VIMHOME.'/.vim/bundle/vundle'
-call vundle#begin()
+let &runtimepath = bundle_root.'/vundle,'.&runtimepath
+call vundle#begin(bundle_root)
 
 " Required: let Vunldle manage vundle.
 Plugin 'gmarik/vundle'
@@ -39,7 +40,7 @@ Plugin 'tomtom/tcomment_vim'
 " Start a * or # search from a visual block
 Plugin 'nelstrom/vim-visual-star-search'
 " Maintains a history of previous yanks, changes and deletes
-Plugin 'vim-scripts/YankRing.vim' {'name': 'yankring'}
+Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
@@ -48,7 +49,7 @@ filetype plugin indent on
 
 let mapleader=","
 
-source $VIMHOME/bundle/myutils/myutils.vim
+source $VIMHOME/myutils.vim
 " Create a backup directory
 call InitBackupDir()
 
