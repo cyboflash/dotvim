@@ -19,7 +19,7 @@ Plugin 'gmarik/vundle'
 " List of the plugins
 
 " L9 library
-Plugin 'eparreno/vim-l9', {'name': 'L9'}
+Plugin 'eparreno/vim-l9'
 " Better status line
 Plugin 'bling/vim-airline'
 " Fuzzy file, buffer, most recently used (mru) and tag finder.
