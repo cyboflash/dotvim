@@ -4,6 +4,7 @@ if has('win32')
   let $VIMHOME = $HOME.'/vimfiles'
 endif
 let bundle_root = $VIMHOME.'/bundle'
+let vundle_root = bundle_root.'/vundle'
 
 " ================= Required Vundle Setup =======================
 " Disable vi-compatability.
@@ -11,7 +12,7 @@ set nocompatible
 " Disable file type detection
 filetype off
 " Set 'runtime' path to include vundle and initialize
-let &runtimepath = bundle_root.'/vundle,'.&runtimepath
+let &runtimepath .= ','.vundle_root
 call vundle#begin(bundle_root)
 
 " Required: let Vunldle manage vundle.
@@ -110,7 +111,7 @@ colorscheme xoria256
 " Turn on the highlight of the line with the cursor.
 set cursorline
 " Set up how to show tabs, end of line, and trailing spaces.
-set listchars=tab:►\ ,eol:¬,trail:●
+set listchars=tab:►►,eol:●,trail:◄
 
 " Make unnamed register to be the cliboard register.
 set clipboard=unnamed
@@ -123,8 +124,11 @@ set complete=t,k
 set hlsearch
 " Do an incremental search.
 set incsearch
-" Ignore the case during the search.
+" Ignore case during search
 set ignorecase
+" Override the 'ignorecase' option if the search pattern contains upper
+" case characters.
+set smartcase
 
 " Print line numbers in the hardcopy
 set printoptions=left:3pc,number:y,syntax:n
