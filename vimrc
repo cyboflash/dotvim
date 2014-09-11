@@ -42,8 +42,6 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'nelstrom/vim-visual-star-search'
 " Maintains a history of previous yanks, changes and deletes
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
-" Better highlight search
-Plugin 'cyboflash/hlnext'
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
