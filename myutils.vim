@@ -128,27 +128,6 @@ function! DeleteFile(...)
   return delStatus
 endfunction
 
-" pattern - pattern to search for
-" dir_list - list of directories to use for the search of the pattern
-" is_recursive - if 1 each directory in the dir_list will be searched
-" recursively
-function! VimGrep(pattern, dir_list, is_recursive, is_exact_match)
-  let l:dir_str = ''
-  if a:is_recursive
-    let l:dir_str .= a:dir_list.'/**'
-  endif
-  for dir in a:dir_list
-    let l:dir_str .= dir.'/*.* '
-  endfor
-  if a:is_exact_match
-    exe ':vim /\<'.a:pattern.'\>/g '.l:dir_str
-  else
-    exe ':vim /'.a:pattern.'/g '.l:dir_str
-  end
-  " Put the screen with a cursor on the center of the screen
-  normal zz
-endfunction
-
 " Taken from http://vimcasts.org/episodes/tidying-whitespace/
 function! StripTrailingWhitespaces()
   " Preparation: save last search, and cursor position.

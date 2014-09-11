@@ -221,61 +221,36 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
 " Use a tag extension
 let g:ctrlp_extensions = ['tag']
 
-" ------------------------------- clang_complete -----------------------------
-" 0 - Select nothing
-" 1 - Automatically select the first entry in the popup menu, but do not
-" insert it into the code.
-" 2 - Automatically select the first entry in the popup menu, and insert it
-" into the code.
-" let g:clang_auto_select = 1
-" 0 - do not complete after ->, ., ::
-" 1 - automatically complete after ->, ., ::
-" let g:clang_complete_auto = 1
-" 0 - do not open quickfix window on error.
-" 1 - open quickfix window on error.
-" let g:clang_complete_copen = 1
-" 0 - do not highlight the warnings and errors
-" 1 - highlight the warnings and errors the same way clang does it
-" let g:clang_hl_errors = 0
-" 0 - do not do some snippets magic on code placeholders like function argument,
-"     template argument, template parameters, etc.
-" 1 - do some snippets magic on code placeholders like function argument,
-"     template argument, template parameters, etc.
-" let g:clang_snippets = 1
-" The snippets engine (clang_complete, ultisnips... see the snippets
-" subdirectory).
-" let g:clang_snippets_engine = "clang_complete"
+" --------------------------------- EasyGrep ----------------------------------
+" Recursive search be activated on start.
+let EasyGrepRecursive = 1
 
-" let g:clang_library_path = "C:\\Program\ Files\ (x86)\\LLVM\ 3.4.svn\\bin"
+" Setting this option causes EasyGrep to search not only the current directory,
+" but also the directories for all buffers currently opened.
+" Search only in the current working directory.
+let EasyGrepSearchCurrentBufferDir = 0
 
-" ------------------------------- omnicppcomplete -----------------------------
-" What to do with an item, after OmniCppComplete menu poped out
-" 0 - don't select the first item.
-" 1 - select the first itme and insert it to the text.
-" 2 - select the first itme but do not insert it to the text.
-let OmniCpp_SelectFirstItem = 2
-" Should the scope of the match be shown first when menu pops out?
-" 0 - show the scope of the match last
-" 1 - show the scope of the match first
-let OmniCpp_ShowScopeInAbbr = 0
-" Show prototype of the function in the abbreviation.
-" 0 - don't show the prototype of the function in the abbreviation.
-" 1 - show the prototype of the function in the abbreviation.
-let OmniCpp_ShowPrototypeInAbbr = 1
-" This option allows to show/hide the access information ('+', '#', '-') in the
-" popup menu.
-" 0 = hide access
-" 1 = show access
-let OmniCpp_ShowAccess = 1
+" Specifies that multiple matches on the same line be treated as different
+" matches, like the g option to vimgrep.
+let EasyGrepEveryMatch = 1
 
-" Autoclose the preview window after the match is found.
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" Specifies that the whole word search keys should be inverted from their
+" default meaning.  For example, when this option is activated, <Leader>vv
+" matches whole word, while <Leader>vV matches everything that includes the
+" word.  Note that this affects both keymappings and commands.
+let EasyGrepInvertWholeWord = 1
 
+" Specifies a list of file patterns that will be excluded from the search.
+" Multiple exclusions must be separated by commas. Note that these patterns will
+" be passed unmodified on to the search program.
+let EasyGrepFilesToExclude="*.lst"
 
 " ======================================================================
 " ============================ mappings ================================
 " ======================================================================
+" Got to the command mode
+nnoremap <leader>, :
+
 " Toggle listing.
 nnoremap <leader>l :set list!<cr>
 
@@ -327,9 +302,3 @@ nnoremap <silent><leader>mn :set lines=999 columns=80<cr>
 nnoremap <silent><F6> :YRShow<CR>
 
 nnoremap <silent><F5> :GundoToggle<CR>
-
-nnoremap <leader>v :call VimGrep(expand('<cword>'), g:prj_dirs, 0, 1)<cr>
-command! -nargs=1 VimGrep :call VimGrep("<args>", g:prj_dirs, 0, 0) | copen | cc
-" abbreviate Vim VimGrep
-
-
