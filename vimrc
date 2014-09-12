@@ -78,6 +78,8 @@ scriptencoding utf-8
 " Set the font
 if has('win32')
   set guifont=Powerline_Consolas:h9:b:cANSI
+elseif has("gui_gtk2")
+  set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 9
 endif
 
 " Remove Menu from GUI
@@ -148,14 +150,7 @@ if has("autocmd")
           \  endif
 
   " Remove trailing whtiespace upon saving
-  autocmd BufWritePre *
-        \ if &ft == "c"      ||
-        \    &ft == "make"   ||
-        \    &ft == "python" ||
-        \    &ft == "cpp"    ||
-        \    &ft == "mdl"    ||
-        \    &ft == "vim"
-        \ | call StripTrailingWhitespaces() | endif
+  autocmd BufWritePre * call StripTrailingWhitespaces()
 
 endif
 
