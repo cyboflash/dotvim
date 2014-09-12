@@ -79,7 +79,7 @@ scriptencoding utf-8
 if has('win32')
   set guifont=Powerline_Consolas:h9:b:cANSI
 elseif has("gui_gtk2")
-  set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 9
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
 endif
 
 " Remove Menu from GUI
