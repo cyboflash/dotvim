@@ -44,6 +44,8 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 " Greping plugin
 Plugin 'EasyGrep'
+" Vim syntax highlighting for c, bison, flex
+Plugin 'justinmk/vim-syntax-extra'
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
