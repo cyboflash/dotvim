@@ -46,9 +46,12 @@ Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 Plugin 'EasyGrep'
 " Vim syntax highlighting for c, bison, flex
 Plugin 'justinmk/vim-syntax-extra'
+" Git from Vim
+Plugin 'tpope/vim-fugitive'
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
+
 " Required: enable plugins and indentation based on the file type.
 filetype plugin indent on
 
