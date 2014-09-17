@@ -44,9 +44,12 @@ Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 " Greping plugin
 Plugin 'EasyGrep'
+" Git from Vim
+Plugin 'tpope/vim-fugitive'
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
+
 " Required: enable plugins and indentation based on the file type.
 filetype plugin indent on
 
