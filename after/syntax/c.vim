@@ -15,8 +15,8 @@
 "   0.1 - initial upload, modification from vimscript#1201, Extended c.vim
 
 " Personal settings
-syn keyword cType  boolean int8 int16 int32 uint8 uint16 uint32
-syn keyword cStorageClass __code __idata __xdata __bit  __no_init
+syn keyword cType  boolean int8 int16 int32 uint8 uint16 uint32 __interrupt __monitor
+syn keyword cStorageClass __code __idata __xdata __bit  __no_init __sfr __root
 
 " Common ANSI-standard functions
 syn keyword cAnsiFunction MULU_ DIVU_ MODU_ MUL_ DIV_ MOD_

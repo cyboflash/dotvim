@@ -25,7 +25,7 @@ Plugin 'eparreno/vim-l9'
 " Better status line
 Plugin 'bling/vim-airline'
 " Fuzzy file, buffer, most recently used (mru) and tag finder.
-Plugin 'kien/ctrlp.vim', {'name': 'ctrlp'}
+Plugin 'ctrlpvim/ctrlp.vim', {'name': 'ctrlp'}
 " Visualize Vim undo tree
 Plugin 'sjl/gundo.vim', {'name': 'gundo'}
 " Project manager
@@ -42,12 +42,30 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'nelstrom/vim-visual-star-search'
 " Maintains a history of previous yanks, changes and deletes
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
-" Greping plugin
-Plugin 'EasyGrep'
 " Vim syntax highlighting for c, bison, flex
 Plugin 'justinmk/vim-syntax-extra'
 " Git from Vim
 Plugin 'tpope/vim-fugitive'
+" Allow to execute :make in the background.
+Plugin 'tpope/vim-dispatch'
+" Very nice autocompletion engine for C/C++
+Plugin 'Valloric/YouCompleteMe'
+" Toggle between the relative and absolute line numbering
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+" Better grep
+Plugin 'mileszs/ack.vim', {'name': 'ack'}
+" Indentation text objects
+Plugin 'michaeljsmith/vim-indent-object'
+" Trace syntax highlight
+Plugin 'gerw/vim-HiLinkTrace'
+" Bracket mappings
+Plugin 'tpope/vim-unimpaired'
+" Easily search for, substitute, and abbreviate multiple variants of a word
+Plugin 'tpope/vim-abolish.git', {'name': 'vim-abolish'}
+" Text filtering and alignment.
+Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
+" Easy text exchange operator
+Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
@@ -80,6 +98,13 @@ set encoding=utf-8
 " properly, vimrc needs to be sourced again.
 scriptencoding utf-8
 
+" String to put at the start of lines that have been wrapped. Must be set
+" after the 'encoding' option
+set showbreak=…
+
+" Wrap long lines at a character in 'breakat' rather than at the last haracter that fits on the
+" screen.
+set linebreak
 " Set the font
 if has('win32')
   set guifont=Powerline_Consolas:h9:b:cANSI
@@ -91,6 +116,9 @@ endif
 set guioptions-=m
 " Remove Toolbar from GUI
 set guioptions-=T
+
+" Don't show preview windows for autocompletion
+set completeopt=menu,menuone
 
 " ===== <Tab> completion =====
 " list:longest - List all matches and complete the longest match
@@ -106,8 +134,8 @@ set number
 " Enable syntax highlighting
 syntax on
 
-" Remeber 300 last ex-commands
-set history=300
+" Remeber 1000 last ex-commands
+set history=1000
 
 " Make a buffer hidden when it is abandoned.
 set hidden
@@ -119,14 +147,18 @@ colorscheme xoria256
 
 " Turn on the highlight of the line with the cursor.
 set cursorline
+
 " Set up how to show tabs, end of line, and trailing spaces.
-set listchars=tab:►►,eol:●,trail:◄
+set listchars=tab:►-,eol:¬,trail:●
 
 " Make unnamed register to be the cliboard register.
 set clipboard=unnamed
 
 " Use tags and dictionary for completion.
 set complete=t,k
+
+" set conceallevel=2
+" set concealcursor=vin
 
 " --------- Search -----------------
 " Highlight the search pattern.
@@ -155,7 +187,7 @@ if has("autocmd")
           \  endif
 
   " Remove trailing whtiespace upon saving
-  autocmd BufWritePre * call StripTrailingWhitespaces()
+  autocmd BufWritePre *.py,*.c,*.h,*.mdl,*.md :call StripTrailingWhitespaces()
 
 endif
 
@@ -165,7 +197,7 @@ endif
 "
 " -------------------------------- airline----------------------------------
 " theme
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'molokai'
 
 " enable/disable automatic population of the `g:airline_symbols` dictionary
 " with powerline symbols.
@@ -221,34 +253,48 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
 " Use a tag extension
 let g:ctrlp_extensions = ['tag']
 
-" --------------------------------- EasyGrep ----------------------------------
-" Recursive search be activated on start.
-let EasyGrepRecursive = 1
+" --------------------------------- YouCompleteMe ----------------------------------
+" 0 - disable diagnositcs us
+" 1 - enable diagnositcs us
+" let g:ycm_show_diagnostics_ui = 1
 
-" Setting this option causes EasyGrep to search not only the current directory,
-" but also the directories for all buffers currently opened.
-" Search only in the current working directory.
-let EasyGrepSearchCurrentBufferDir = 0
+" Ask once per '.ycm_extra_conf.py' file
+" if it is safe to be loaded. This is to prevent execution of malicious code from
+" a '.ycm_extra_conf.py' file you didn't write
+let g:ycm_confirm_extra_conf = 0
 
-" Specifies that multiple matches on the same line be treated as different
-" matches, like the g option to vimgrep.
-let EasyGrepEveryMatch = 1
+" When this option is set to '1', YCM's identifier completer will also collect
+" identifiers from tags files. The list of tags files to examine is retrieved
+" from the 'tagfiles()' Vim function which examines the 'tags' Vim option.
+let g:ycm_collect_identifiers_from_tags_files = 1
 
-" Specifies that the whole word search keys should be inverted from their
-" default meaning.  For example, when this option is activated, <Leader>vv
-" matches whole word, while <Leader>vV matches everything that includes the
-" word.  Note that this affects both keymappings and commands.
-let EasyGrepInvertWholeWord = 1
+" Do not show diagnostic signs
+let g:ycm_enable_diagnostic_signs = 0
 
-" Specifies a list of file patterns that will be excluded from the search.
-" Multiple exclusions must be separated by commas. Note that these patterns will
-" be passed unmodified on to the search program.
-let EasyGrepFilesToExclude="*.lst"
+" Do not enable diagnistic highlighting
+let g:ycm_enable_diagnostic_highlighting = 0
+
+" Do not enable diagnistic highlighting
+let g:ycm_server_keep_logfiles = 1
+
+" --------------------------------- ack ----------------------------------
+let ack_cmd = '--cc --type-set:md:ext:mtd,md'
+
+
 
 " ======================================================================
 " ============================ mappings ================================
 " ======================================================================
-" Got to the command mode
+" Remap redraw to Alt-l
+nnoremap <A-l> <C-l>
+
+"Better window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Get to the command mode
 nnoremap <leader>, :
 
 " Toggle listing.
@@ -294,6 +340,8 @@ nnoremap <silent><leader>ev :edit $VIMHOME/vimrc<cr>
 
 nnoremap <silent><F9> :cprev<cr>zz
 nnoremap <silent><F10> :cnext<cr>zz
+nnoremap <silent><C-F9> :lprev<cr>zz
+nnoremap <silent><C-F10> :lnext<cr>zz
 nnoremap <silent><M-F9> :cfirst<cr>
 nnoremap <silent><M-F10> :clast<cr>
 nnoremap <silent><leader>mm :set lines=999 columns=999<cr>
@@ -302,3 +350,13 @@ nnoremap <silent><leader>mn :set lines=999 columns=80<cr>
 nnoremap <silent><F6> :YRShow<CR>
 
 nnoremap <silent><F5> :GundoToggle<CR>
+
+nnoremap <C-S-P> :call SynStack()<cr>
+
+" Bubbling commands are taken from  http://vimcasts.org/episodes/bubbling-text/
+" Bubble single lines
+nnoremap <C-Up> [e
+nnoremap <C-Down> ]e
+" Bubble multiple lines
+vmap <C-Up> [egv
+vmap <C-Down> ]egv

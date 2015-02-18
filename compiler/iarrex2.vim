@@ -19,7 +19,8 @@ let s:c_err_fmt .= '%Z'.'"%f"\,%l%\s%#%t%\w%#%\s%#%n:%m'.','
 let s:c_err_fmt .= '%A'.'%p^'.','
 let s:c_err_fmt .= '%Z'.'"%f"\,%l%\s%#%t%\w%#%m'.','
 
-let s:c_err_fmt .= '"%f"\,%l%\s%#%t%\w%#%\s%#%n:%m'.','
+" let s:c_err_fmt .= '"%f"\,%l%\s%#%t%\w%#%\s%#%n:%m'.','
+" let s:c_err_fmt .= '%A%m'.','
 
 " let s:c_err_fmt .= '%A'.'%p~'.','
 " let s:c_err_fmt .= '%C'.'"%f"\,%l'.','
@@ -95,6 +96,7 @@ let s:c_err_fmt .= '"%f"\,%l%\s%#%t%\w%#%\s%#%n:%m'.','
 
 " Full error format message.
 let s:err_fmt = s:c_err_fmt
+" let s:err_fmt .= ','.'%+G%.%#'
 
 execute 'CompilerSet errorformat='.escape(s:err_fmt,'"\')
 CompilerSet makeprg=make
