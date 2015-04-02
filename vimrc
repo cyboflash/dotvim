@@ -66,6 +66,10 @@ Plugin 'tpope/vim-abolish.git', {'name': 'vim-abolish'}
 Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
 " Easy text exchange operator
 Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
+" Potion plugin
+Plugin 'cyboflash/potion.git'
+" Code snippets
+Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
@@ -152,7 +156,12 @@ set cursorline
 set listchars=tab:►-,eol:¬,trail:●
 
 " Make unnamed register to be the cliboard register.
-set clipboard=unnamed
+if has('linux')
+  set clipboard=unnamedplus
+elseif has('win32') || has('win64')
+  set clipboard=unnamed
+endif
+
 
 " Use tags and dictionary for completion.
 set complete=t,k
@@ -180,14 +189,17 @@ set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
 set cscopeverbose
 
 if has("autocmd")
-  " Make Vim remember where I left off.
-  autocmd BufReadPost *
-          \ if line("'\"") > 0 && line("'\"") <= line("$") |
-          \  exe "normal g`\"" |
-          \  endif
+  augroup mygroup:
+    autocmd!
+    " Make Vim remember where I left off.
+    autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \  exe "normal g`\"" |
+            \  endif
 
-  " Remove trailing whtiespace upon saving
-  autocmd BufWritePre *.py,*.c,*.h,*.mdl,*.md :call StripTrailingWhitespaces()
+    " Remove trailing whtiespace upon saving
+    autocmd BufWritePre *.py,*.c,*.h,*.mdl,*.md :call StripTrailingWhitespaces()
+  augroup END
 
 endif
 
@@ -195,6 +207,12 @@ endif
 " =========================== Plugin setup ====================================
 " =============================================================================
 "
+
+" -------------------------------- UltiSnips----------------------------------
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+
 " -------------------------------- airline----------------------------------
 " theme
 let g:airline_theme = 'molokai'
@@ -271,7 +289,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 " Do not show diagnostic signs
 let g:ycm_enable_diagnostic_signs = 0
 
-" Do not enable diagnistic highlighting
+" Do not enable diagnostic highlighting
 let g:ycm_enable_diagnostic_highlighting = 0
 
 " Do not enable diagnistic highlighting
