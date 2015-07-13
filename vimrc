@@ -298,7 +298,8 @@ let g:ycm_server_keep_logfiles = 1
 " --------------------------------- ack ----------------------------------
 let ack_cmd = '--cc --type-set:md:ext:mtd,md'
 
-
+" Trim empty lines at the end of the file.
+au BufWritePre * call TrimEndLines()
 
 " ======================================================================
 " ============================ mappings ================================

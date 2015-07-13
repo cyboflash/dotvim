@@ -1,0 +1,9 @@
+snippet register
+typedef union ${1:MyRegister}Register_t {
+  uint32_t value;
+  struct {
+    uint32_t ${2:myField};
+  } field;
+} $1Register;
+$0
+endsnippet

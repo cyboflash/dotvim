@@ -12,7 +12,6 @@ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 setlocal cindent
 
 " Set text width to 100
-" setlocal textwidth=100
 setlocal textwidth=100
 
 " This is a sequence of letters which describes how automatic
