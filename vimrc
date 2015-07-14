@@ -1,6 +1,6 @@
 ﻿" Set the VIM directory based on if it is Windows or other system.
 let $VIMHOME = $HOME.'/.vim'
-if has('win32')
+if has('win32') || has('win64')
   let $VIMHOME = $HOME.'/vimfiles'
 endif
 let bundle_root = $VIMHOME.'/bundle'
@@ -15,10 +15,10 @@ filetype off
 let &runtimepath .= ','.vundle_root
 call vundle#begin(bundle_root)
 
+" Section: Plugins {{{1
+
 " Required: let Vunldle manage vundle.
 Plugin 'gmarik/vundle'
-
-" List of the plugins
 
 " L9 library
 Plugin 'eparreno/vim-l9'
@@ -66,13 +66,101 @@ Plugin 'tpope/vim-abolish.git', {'name': 'vim-abolish'}
 Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
 " Easy text exchange operator
 Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
-" Potion plugin
-Plugin 'cyboflash/potion.git'
 " Code snippets
 Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
+
+" Section: Plugin Setup {{{1
+
+" UltiSnips {{{2
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+
+" airline {{{2
+let g:airline_theme = 'molokai'
+
+" enable/disable automatic population of the `g:airline_symbols` dictionary
+" with powerline symbols.
+let g:airline_powerline_fonts=1
+
+" 'f' Display the full hierarchy of the tag, not just the tag itself.
+let g:airline#extensions#tagbar#flags = 'f'
+
+" Enable iminsert detection.
+let g:airline_detect_iminsert=1
+
+" tcomment {{{2
+" Setup line comment for .c files
+let g:tcommentLineC = {
+            \ 'commentstring': '// %s',
+            \ }
+
+" project {{{2
+" i - Display the filename and the current working directory in the command
+"     line when a file is selected for opening.
+" m - Turn on the mapping of the CTRL-W_o and CTRL-W_CTRL_O normal mode
+"     commands to make the current buffer the only visible buffer, but keep the
+"     Project Windows visible too.
+"     line when a file is selected for opening.
+" s - Use syntax highlighting in the Project Window.
+" S - Turn on sorting for refresh and create.
+" g - <F12> maps to toggle the project window.
+" t - Toggle the size of the window rather than just increase the size wiehn
+"     pressing <space> or right-clicking.
+" c - When present, the Project Window will automatically close when
+"     you select a file.
+
+let g:proj_flags='imsSgtc'
+
+" tagbar {{{2
+" Automatically close tagbar window when a jump is made to a tag
+let g:tagbar_autoclose = 1
+" Move the cursor to the tagbar window after it is opened
+let g:tagbar_autofocus = 1
+" Sort the tags by name
+let g:tagbar_sort = 1
+" Open folds if the tag is inside of it
+let g:tagbar_autoshowtag = 1
+" Open all folds
+let g:tagbar_foldlevel = 99
+" Set the width of the tagbar window
+let g:tagbar_width = 60
+
+" ctrlp {{{2
+" Show the match window on top, order of matches: top to bottom
+" minimum match window height: 1, maximum match window height: 30
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
+" Use a tag extension
+let g:ctrlp_extensions = ['tag']
+
+" YouCompleteMe {{{2
+" 0 - disable diagnositcs us
+" 1 - enable diagnositcs us
+" let g:ycm_show_diagnostics_ui = 1
+
+" Ask once per '.ycm_extra_conf.py' file
+" if it is safe to be loaded. This is to prevent execution of malicious code from
+" a '.ycm_extra_conf.py' file you didn't write
+let g:ycm_confirm_extra_conf = 0
+
+" When this option is set to '1', YCM's identifier completer will also collect
+" identifiers from tags files. The list of tags files to examine is retrieved
+" from the 'tagfiles()' Vim function which examines the 'tags' Vim option.
+let g:ycm_collect_identifiers_from_tags_files = 1
+
+" Do not show diagnostic signs
+let g:ycm_enable_diagnostic_signs = 0
+
+" Do not enable diagnostic highlighting
+let g:ycm_enable_diagnostic_highlighting = 0
+
+" Do not enable diagnistic highlighting
+let g:ycm_server_keep_logfiles = 1
+
+" Section: Options {{{1
 
 " Required: enable plugins and indentation based on the file type.
 filetype plugin indent on
@@ -92,7 +180,7 @@ set backspace=indent,eol,start
 " Always show the statusline
 set laststatus=2
 
-" Necessary to show the Unicode glyphs, needed for the vim-powerline plugin.
+" Necessary to show the Unicode glyphs, needed for the vim-airline plugin.
 set encoding=utf-8
 
 " Make sure this setting is after 'encoding' setting
@@ -110,7 +198,7 @@ set showbreak=…
 " screen.
 set linebreak
 " Set the font
-if has('win32')
+if has('win32') || has('win64')
   set guifont=Powerline_Consolas:h9:b:cANSI
 elseif has("gui_gtk2")
   set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
@@ -166,9 +254,6 @@ endif
 " Use tags and dictionary for completion.
 set complete=t,k
 
-" set conceallevel=2
-" set concealcursor=vin
-
 " --------- Search -----------------
 " Highlight the search pattern.
 set hlsearch
@@ -188,8 +273,10 @@ set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
 " Show msg when any other cscope db added
 set cscopeverbose
 
+" Section: Autocommands {{{1
 if has("autocmd")
-  augroup mygroup:
+  augroup mygroup
+    " Remove ALL autocommands for the current group.
     autocmd!
     " Make Vim remember where I left off.
     autocmd BufReadPost *
@@ -199,111 +286,18 @@ if has("autocmd")
 
     " Remove trailing whtiespace upon saving
     autocmd BufWritePre *.py,*.c,*.h,*.mdl,*.md :call StripTrailingWhitespaces()
+
+    " Trim empty lines at the end of the file.
+    autocmd BufWritePre * call TrimEndLines()
+
+    " Set foldmethod for Vim files
+    autocmd FileType vim setlocal foldmethod=marker 
+
   augroup END
 
 endif
 
-" =============================================================================
-" =========================== Plugin setup ====================================
-" =============================================================================
-"
-
-" -------------------------------- UltiSnips----------------------------------
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
-let g:UltiSnipsJumpBackwardTrigger="<C-j>"
-
-" -------------------------------- airline----------------------------------
-" theme
-let g:airline_theme = 'molokai'
-
-" enable/disable automatic population of the `g:airline_symbols` dictionary
-" with powerline symbols.
-let g:airline_powerline_fonts=1
-
-" 'f' Display the full hierarchy of the tag, not just the tag itself.
-let g:airline#extensions#tagbar#flags = 'f'
-
-" Enable iminsert detection.
-let g:airline_detect_iminsert=1
-
- " -------------------------------- tcomment ----------------------------------
- "  Setup line comment for .c files
-let g:tcommentLineC = {
-            \ 'commentstring': '// %s',
-            \ }
-
-" --------------------------------- project -----------------------------------
-" i - Display the filename and the current working directory in the command
-"     line when a file is selected for opening.
-" m - Turn on the mapping of the CTRL-W_o and CTRL-W_CTRL_O normal mode
-"     commands to make the current buffer the only visible buffer, but keep the
-"     Project Windows visible too.
-"     line when a file is selected for opening.
-" s - Use syntax highlighting in the Project Window.
-" S - Turn on sorting for refresh and create.
-" g - <F12> maps to toggle the project window.
-" t - Toggle the size of the window rather than just increase the size wiehn
-"     pressing <space> or right-clicking.
-" c - When present, the Project Window will automatically close when
-"     you select a file.
-
-let g:proj_flags='imsSgtc'
-
-" --------------------------------- tagbar ----------------------------------
-" Automatically close tagbar window when a jump is made to a tag
-let g:tagbar_autoclose = 1
-" Move the cursor to the tagbar window after it is opened
-let g:tagbar_autofocus = 1
-" Sort the tags by name
-let g:tagbar_sort = 1
-" Open folds if the tag is inside of it
-let g:tagbar_autoshowtag = 1
-" Open all folds
-let g:tagbar_foldlevel = 99
-" Set the width of the tagbar window
-let g:tagbar_width = 60
-
-" --------------------------------- ctrlp ----------------------------------
-" Show the match window on top, order of matches: top to bottom
-" minimum match window height: 1, maximum match window height: 30
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
-" Use a tag extension
-let g:ctrlp_extensions = ['tag']
-
-" --------------------------------- YouCompleteMe ----------------------------------
-" 0 - disable diagnositcs us
-" 1 - enable diagnositcs us
-" let g:ycm_show_diagnostics_ui = 1
-
-" Ask once per '.ycm_extra_conf.py' file
-" if it is safe to be loaded. This is to prevent execution of malicious code from
-" a '.ycm_extra_conf.py' file you didn't write
-let g:ycm_confirm_extra_conf = 0
-
-" When this option is set to '1', YCM's identifier completer will also collect
-" identifiers from tags files. The list of tags files to examine is retrieved
-" from the 'tagfiles()' Vim function which examines the 'tags' Vim option.
-let g:ycm_collect_identifiers_from_tags_files = 1
-
-" Do not show diagnostic signs
-let g:ycm_enable_diagnostic_signs = 0
-
-" Do not enable diagnostic highlighting
-let g:ycm_enable_diagnostic_highlighting = 0
-
-" Do not enable diagnistic highlighting
-let g:ycm_server_keep_logfiles = 1
-
-" --------------------------------- ack ----------------------------------
-let ack_cmd = '--cc --type-set:md:ext:mtd,md'
-
-" Trim empty lines at the end of the file.
-au BufWritePre * call TrimEndLines()
-
-" ======================================================================
-" ============================ mappings ================================
-" ======================================================================
+" Section: Mappings {{{1
 " Remap redraw to Alt-l
 nnoremap <A-l> <C-l>
 
@@ -321,7 +315,6 @@ nnoremap <leader>l :set list!<cr>
 
 nnoremap <silent><F8> :nohlsearch<cr>
 
-" inoremap <Tab> <C-x><C-]>
 " s: Find this C symbol
 nnoremap <leader>cs :call CscopeFind('s', expand('<cword>'))<cr>zz
 " g: Find this definition
