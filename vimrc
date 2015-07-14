@@ -1,4 +1,6 @@
-﻿" Set the VIM directory based on if it is Windows or other system.
+﻿" vim: foldmethod=marker foldcolumn=4
+
+" Set the VIM directory based on if it is Windows or other system.
 let $VIMHOME = $HOME.'/.vim'
 if has('win32') || has('win64')
   let $VIMHOME = $HOME.'/vimfiles'
@@ -14,6 +16,7 @@ filetype off
 " Set 'runtime' path to include vundle and initialize
 let &runtimepath .= ','.vundle_root
 call vundle#begin(bundle_root)
+
 
 " Section: Plugins {{{1
 
@@ -289,9 +292,6 @@ if has("autocmd")
 
     " Trim empty lines at the end of the file.
     autocmd BufWritePre * call TrimEndLines()
-
-    " Set foldmethod for Vim files
-    autocmd FileType vim setlocal foldmethod=marker 
 
   augroup END
 
