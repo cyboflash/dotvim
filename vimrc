@@ -10,7 +10,7 @@ let bundle_root = $VIMHOME.'/bundle'
 let vundle_root = bundle_root.'/vundle'
 
 " Section: Required Vundle Setup
-" Disable vi-compatability.
+" Disable vi-compatibility.
 set nocompatible
 " Disable file type detection
 filetype off
@@ -39,7 +39,7 @@ Plugin 'nelstrom/vim-qargs'
 Plugin 'tpope/vim-surround'
 " Display tags in a window
 Plugin 'majutsushi/tagbar'
-" An extensible & universal commenting plugin that also handles embedded filetypes
+" An extensible & universal commenting plugin that also handles embedded file types
 Plugin 'tomtom/tcomment_vim'
 " Start a * or # search from a visual block
 Plugin 'nelstrom/vim-visual-star-search'
@@ -51,7 +51,7 @@ Plugin 'justinmk/vim-syntax-extra'
 Plugin 'tpope/vim-fugitive'
 " Allow to execute :make in the background.
 Plugin 'tpope/vim-dispatch'
-" Very nice autocompletion engine for C/C++
+" Very nice auto completion engine for C/C++
 Plugin 'Valloric/YouCompleteMe'
 " Toggle between the relative and absolute line numbering
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
@@ -111,7 +111,7 @@ let g:tcommentLineC = {
 " s - Use syntax highlighting in the Project Window.
 " S - Turn on sorting for refresh and create.
 " g - <F12> maps to toggle the project window.
-" t - Toggle the size of the window rather than just increase the size wiehn
+" t - Toggle the size of the window rather than just increase the size when
 "     pressing <space> or right-clicking.
 " c - When present, the Project Window will automatically close when
 "     you select a file.
@@ -160,7 +160,7 @@ let g:ycm_enable_diagnostic_signs = 0
 " Do not enable diagnostic highlighting
 let g:ycm_enable_diagnostic_highlighting = 0
 
-" Do not enable diagnistic highlighting
+" Do not enable diagnostic highlighting
 let g:ycm_server_keep_logfiles = 1
 
 " Section: Options {{{1
@@ -175,7 +175,7 @@ source $VIMHOME/myutils.vim
 call InitBackupDir()
 
 " Set the backspace
-" indent - Allow backspacing over autoindent.
+" indent - Allow backspacing over auto indent.
 " eol - Allow backspacing over line breaks.
 " start - Allow backspacing over the start of insert.
 set backspace=indent,eol,start
@@ -197,7 +197,7 @@ scriptencoding utf-8
 " after the 'encoding' option
 set showbreak=…
 
-" Wrap long lines at a character in 'breakat' rather than at the last haracter that fits on the
+" Wrap long lines at a character in 'breakat' rather than at the last character that fits on the
 " screen.
 set linebreak
 " Set the font
@@ -212,7 +212,7 @@ set guioptions-=m
 " Remove Toolbar from GUI
 set guioptions-=T
 
-" Don't show preview windows for autocompletion
+" Don't show preview windows for auto completion
 set completeopt=menu,menuone
 
 " ===== <Tab> completion =====
@@ -229,7 +229,7 @@ set number
 " Enable syntax highlighting
 syntax on
 
-" Remeber 1000 last ex-commands
+" Remember 1000 last ex-commands
 set history=1000
 
 " Make a buffer hidden when it is abandoned.
@@ -246,7 +246,7 @@ set cursorline
 " Set up how to show tabs, end of line, and trailing spaces.
 set listchars=tab:►-,eol:¬,trail:●
 
-" Make unnamed register to be the cliboard register.
+" Make unnamed register to be the clipboard register.
 if has('linux')
   set clipboard=unnamedplus
 elseif has('win32') || has('win64')
@@ -285,8 +285,8 @@ if has("autocmd")
     " Make Vim remember where I left off.
     autocmd BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \  exe "normal g`\"" |
-            \  endif
+            \   exe "normal g`\"" |
+            \ endif
 
     " Trim empty lines at the end of the file.
     autocmd BufWritePre * call TrimEndLines()
@@ -295,11 +295,9 @@ if has("autocmd")
     autocmd BufRead,BufNewFile *.src,*.asm,*.lst  setfiletype asm8051
     autocmd BufRead,BufNewFile *.md setfiletype mdl
 
-    " Remove trailing whtiespace for specifil filetypes.
-    autocmd BufWritePre * 
-          \ if index(['c', 'cpp', 'python', 'md', 'asm8051', 'make'], &filetype) >= 0 |
-          \ call StripTrailingWhitespaces() |
-          \ endif
+    " Remove trailing whitespace for specific file types.
+    autocmd FileType c,cpp,python,asm8051,make,md
+            \ autocmd BufWritePre <buffer> call StripTrailingWhitespaces()
 
   augroup END
 
