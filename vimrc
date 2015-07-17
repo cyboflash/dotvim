@@ -1,5 +1,6 @@
 ﻿" vim: foldmethod=marker foldcolumn=4
 
+" Section: Variable Setup {{{1
 " Set the VIM directory based on if it is Windows or other system.
 let $VIMHOME = $HOME.'/.vim'
 if has('win32') || has('win64')
@@ -8,17 +9,16 @@ endif
 let bundle_root = $VIMHOME.'/bundle'
 let vundle_root = bundle_root.'/vundle'
 
-" ================= Required Vundle Setup =======================
+" Section: Required Vundle Setup {{{1
 " Disable vi-compatability.
 set nocompatible
 " Disable file type detection
 filetype off
 " Set 'runtime' path to include vundle and initialize
 let &runtimepath .= ','.vundle_root
-call vundle#begin(bundle_root)
-
 
 " Section: Plugins {{{1
+call vundle#begin(bundle_root)
 
 " Required: let Vunldle manage vundle.
 Plugin 'gmarik/vundle'
@@ -281,17 +281,45 @@ if has("autocmd")
   augroup mygroup
     " Remove ALL autocommands for the current group.
     autocmd!
+
     " Make Vim remember where I left off.
     autocmd BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
             \  exe "normal g`\"" |
             \  endif
 
-    " Remove trailing whtiespace upon saving
-    autocmd BufWritePre *.py,*.c,*.h,*.mdl,*.md :call StripTrailingWhitespaces()
-
     " Trim empty lines at the end of the file.
     autocmd BufWritePre * call TrimEndLines()
+
+    autocmd BufRead,BufNewFile *.mot  setfiletype srec
+    autocmd BufRead,BufNewFile *.src,*.asm,*.lst  setfiletype asm8051
+    autocmd BufRead,BufNewFile *.md setfiletype mdl
+
+    " Remove trailing whtiespace
+    autocmd BufWritePre *.c,*.cpp,*.py,*.md,*.mtd,*.asm,*.lst,*.src :call StripTrailingWhitespaces()
+
+    " tabstop - Number of spaces that a <Tab> in the file counts for.
+    "   i.e. if there is a tab in the file when I read it, this is the number
+    "   of spaces that I will see.
+    " softtabstop - Number of spaces that a <Tab> counts for while performing
+    "   editing operations, like inserting <Tab> or using <BS>.
+    " shiftwidth - Number of spaces to use for each step of (auto)indent.
+    "   Used for 'cindent', >>, <<, etc.
+    " expandtab - Convert tabs to spaces.
+    autocmd FileType * setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
+    " Replace all sequences of white-space containing a
+    " <Tab> with new strings of white-space using the new
+    " tabstop value given.  If you do not specify a new
+    " tabstop size or it is zero, Vim uses the current value
+    " of 'tabstop'.
+    " The current value of 'tabstop' is always used to
+    " compute the width of existing tabs.
+    " With !, Vim also replaces strings of only normal
+    " spaces with tabs where appropriate.
+    " With 'expandtab' on, Vim replaces all tabs with the
+    " appropriate number of spaces.
+    retab!
 
   augroup END
 
@@ -364,6 +392,8 @@ nnoremap <silent><F6> :YRShow<CR>
 nnoremap <silent><F5> :GundoToggle<CR>
 
 nnoremap <C-S-P> :call SynStack()<cr>
+
+nnoremap <Space> za
 
 " Bubbling commands are taken from  http://vimcasts.org/episodes/bubbling-text/
 " Bubble single lines
