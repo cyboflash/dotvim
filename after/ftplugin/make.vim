@@ -22,4 +22,4 @@ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 " spaces with tabs where appropriate.
 " With 'expandtab' on, Vim replaces all tabs with the
 " appropriate number of spaces.
-retab!
+retab
