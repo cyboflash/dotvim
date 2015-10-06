@@ -23,6 +23,24 @@ call vundle#begin(bundle_root)
 " Required: let Vunldle manage vundle.
 Plugin 'gmarik/vundle'
 
+" Easy motion
+Plugin 'easymotion/vim-easymotion.git'
+" Scratch buffer
+Plugin 'mtth/scratch.vim'
+" Adjust Gvim font size via keypresses
+Plugin 'drmikehenry/vim-fontsize.git'
+" text objects for various C and C++ blocks with power of clang
+Plugin 'rhysd/vim-textobj-clang.git'
+" Vim scripting interface to clang. Needed by other plugins.
+Plugin 'rhysd/libclang-vim.git'
+" Create your own text objects
+Plugin 'kana/vim-textobj-user.git'
+" Line text object
+Plugin 'kana/vim-textobj-line.git'
+" Vim plugin for copying to the system clipboard with text-objects and motions
+Plugin 'christoomey/vim-system-copy.git'
+" Syntax highlighting for LLVM
+Plugin 'Superbil/llvm.vim.git', {'name': 'llvm-syn-hl'}
 " L9 library
 Plugin 'eparreno/vim-l9'
 " Better status line
@@ -53,8 +71,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-dispatch'
 " Very nice auto completion engine for C/C++
 Plugin 'Valloric/YouCompleteMe'
-" Toggle between the relative and absolute line numbering
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 " Better grep
 Plugin 'mileszs/ack.vim', {'name': 'ack'}
 " Indentation text objects
@@ -71,11 +87,16 @@ Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
 Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
 " Code snippets
 Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
-
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
 
+" Required: enable plugins and indentation based on the file type.
+filetype plugin indent on
+
 " Section: Plugin Setup {{{1
+" fontsize {{{2
+let g:fontsize#defaultSize = 13
+let g:fontsize#timeout = 0
 
 " UltiSnips {{{2
 let g:UltiSnipsExpandTrigger="<C-k>"
@@ -139,6 +160,11 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
 " Use a tag extension
 let g:ctrlp_extensions = ['tag']
 
+" Ack {{{2
+" Configure Ack to use ag, the sliver searcher.
+let g:ackprg = 'ag --nogroup --nocolor --column'
+" let g:ackprg = 'ack-grep -s -H --nocolor --nogroup --column'
+
 " YouCompleteMe {{{2
 " 0 - disable diagnositcs us
 " 1 - enable diagnositcs us
@@ -165,10 +191,11 @@ let g:ycm_server_keep_logfiles = 1
 
 " Section: Options {{{1
 
-" Required: enable plugins and indentation based on the file type.
-filetype plugin indent on
-
 let mapleader=","
+
+set cscopeprg=gtags-cscope
+
+set relativenumber
 
 source $VIMHOME/myutils.vim
 " Create a backup directory
@@ -204,7 +231,7 @@ set linebreak
 if has('win32') || has('win64')
   set guifont=Powerline_Consolas:h9:b:cANSI
 elseif has("gui_gtk2")
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
 endif
 
 " Remove Menu from GUI
@@ -245,14 +272,6 @@ set cursorline
 
 " Set up how to show tabs, end of line, and trailing spaces.
 set listchars=tab:►-,eol:¬,trail:●
-
-" Make unnamed register to be the clipboard register.
-if has('linux')
-  set clipboard=unnamedplus
-elseif has('win32') || has('win64')
-  set clipboard=unnamed
-endif
-
 
 " Use tags and dictionary for completion.
 set complete=t,k
@@ -325,6 +344,13 @@ if has("autocmd")
     autocmd FileType c,cpp,python,asm8051,make,md
             \ autocmd BufWritePre <buffer> call StripTrailingWhitespaces()
 
+    " This is a temprorary solution for the Ack plugin.
+    " As Vim creates the quickfix list, it adds a buffer for each file. That
+    " autocommand executes :cd to the current working directory for each file
+    " added and causes the file names to be resolved (from full path to
+    " relative). Executing :cd like that is a no-op in this case case.
+    autocmd BufAdd * execute 'cd' fnameescape(getcwd())
+
   augroup END
 
 endif
@@ -347,34 +373,14 @@ nnoremap <leader>l :set list!<cr>
 
 nnoremap <silent><F8> :nohlsearch<cr>
 
-" s: Find this C symbol
-nnoremap <leader>cs :call CscopeFind('s', expand('<cword>'))<cr>zz
-" g: Find this definition
-nnoremap <leader>cg :call CscopeFind('g', expand('<cword>'))<cr>zz
-" d: Find functions called by this function
-nnoremap <leader>cd :call CscopeFind('d', expand('<cword>'))<cr>zz
-" c: Find functions calling this function
-nnoremap <leader>cc :call CscopeFind('c', expand('<cword>'))<cr>zz
-" t: Find this text string
-nnoremap <leader>ct :call CscopeFind('t', expand('<cword>'))<cr>zz
-" e: Find this egrep pattern
-nnoremap <leader>ce :call CscopeFind('e', expand('<cword>'))<cr>zz
-" f: Find this file
-nnoremap <leader>cf :call CscopeFind('f', expand('<cword>'))<cr>zz
-" i: Find files #including this file
-nnoremap <leader>ci :call CscopeFind('i', expand('<cword>'))<cr>zz
-
-nnoremap <F7> :call RebuildCscopeAndCtags()<cr>
-nnoremap <silent><F11> :make all<cr>:copen<cr>
-nnoremap <silent><C-F11> :make rebuild<cr>:copen<cr>
-nnoremap <silent><M-F11> :make final<cr>:copen<cr>
+nnoremap <leader>vv :vsp<cr>
 
 " Toggle the Tlist window using <F4>
 nnoremap <silent><F4> :TagbarToggle<cr>
 
 nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fm :CtrlPMixed<cr>
-nnoremap <leader>ff :CtrlP g:prj_root_8dot3<cr>
+nnoremap <leader>ff :CtrlP getcwd()<cr>
 nnoremap <leader>ft :CtrlPTag<cr>
 
 " Map sourcing of .vimrc file.
@@ -389,15 +395,13 @@ nnoremap <silent><C-F10> :lnext<cr>zz
 nnoremap <silent><M-F9> :cfirst<cr>
 nnoremap <silent><M-F10> :clast<cr>
 nnoremap <silent><leader>mm :set lines=999 columns=999<cr>
-nnoremap <silent><leader>mn :set lines=999 columns=80<cr>
+nnoremap <silent><leader>mn :set lines=999 columns=90<cr>
 
 nnoremap <silent><F6> :YRShow<CR>
 
 nnoremap <silent><F5> :GundoToggle<CR>
 
 nnoremap <C-S-P> :call SynStack()<cr>
-
-nnoremap <Space> za
 
 " Bubbling commands are taken from  http://vimcasts.org/episodes/bubbling-text/
 " Bubble single lines

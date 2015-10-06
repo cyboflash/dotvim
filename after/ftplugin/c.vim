@@ -24,13 +24,6 @@ setlocal textwidth=100
 "       int i;   // the index in the list 
 setlocal formatoptions+=j
 
-" 'colorcolumn' is a comma separated list of screen columns that are
-" highlighted with ColorColumn |hl-ColorColumn|.  Useful to align
-" text.  Will make screen redrawing slower.
-" The screen column can be an absolute number, or a number preceded with
-" '+' or '-', which is added to or subtracted from 'textwidth'.
-setlocal colorcolumn=101
-
 " Replace all sequences of white-space containing a 'tab' with new strings
 " of white-space using the tabstop value.
 retab

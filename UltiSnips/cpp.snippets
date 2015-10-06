@@ -1,9 +1,24 @@
-snippet reg
-typedef union ${1:Name}Register_t {
-	uint32_t value;
-	struct {
-		uint32_t ${2:field};
-	} field;
-} $1Register;
+snippet inc<
+#include <${1:iostream}>
 $0
+endsnippet
+
+snippet inc"
+#include "${1:iostream}.h"
+$0
+endsnippet
+
+snippet def
+#define ${1:MACRO} (${2:TEXT})
+$0
+endsnippet
+
+snippet prtf
+printf("${1:Hello World!\n}");$0
+endsnippet
+
+snippet if
+if(${1:condition}) {
+	${2:body}
+}$0
 endsnippet

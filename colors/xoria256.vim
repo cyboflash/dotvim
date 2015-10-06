@@ -145,4 +145,3 @@ hi treeLink       ctermfg=182  guifg=#dfafdf
 " sign define breakPoint  linehl=breakPoint  text=>>
 " sign define both        linehl=currentLine text=>>
 " sign define empty       linehl=empty
-
