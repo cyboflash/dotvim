@@ -1,6 +1,6 @@
 ﻿" vim: foldmethod=marker foldcolumn=4
 
-" Section: Must be done first {{{1
+" Section: Must be done first 
 " Set the VIM directory based on if it is Windows or other system.
 let $VIMHOME = $HOME.'/.vim'
 if has('win32') || has('win64')
@@ -17,7 +17,7 @@ filetype off
 " Set 'runtime' path to include vundle and initialize
 let &runtimepath .= ','.vundle_root
 
-" Section: Plugins {{{1
+" Section: Plugins 
 call vundle#begin(bundle_root)
 
 " Required: let Vunldle manage vundle.
@@ -45,6 +45,10 @@ Plugin 'Superbil/llvm.vim.git', {'name': 'llvm-syn-hl'}
 Plugin 'eparreno/vim-l9'
 " Better status line
 Plugin 'bling/vim-airline'
+" Status line themes
+Plugin 'vim-airline/vim-airline-themes'
+" Fonts for airline/powerline
+Plugin 'powerline/fonts.git'
 " Fuzzy file, buffer, most recently used (mru) and tag finder.
 Plugin 'ctrlpvim/ctrlp.vim', {'name': 'ctrlp'}
 " Visualize Vim undo tree
@@ -71,6 +75,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-dispatch'
 " Very nice auto completion engine for C/C++
 Plugin 'Valloric/YouCompleteMe'
+" Configuration generator for YouCompleteMe
+Plugin 'rdnetto/YCM-Generator'
 " Better grep
 Plugin 'mileszs/ack.vim', {'name': 'ack'}
 " Indentation text objects
@@ -87,23 +93,25 @@ Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
 Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
 " Code snippets
 Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
+
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
 
 " Required: enable plugins and indentation based on the file type.
 filetype plugin indent on
 
-" Section: Plugin Setup {{{1
-" fontsize {{{2
+" Section: Plugin Setup 
+" fontsize 
 let g:fontsize#defaultSize = 13
 let g:fontsize#timeout = 0
 
-" UltiSnips {{{2
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
-let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+" UltiSnips 
+let g:UltiSnipsExpandTrigger="<C-h>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
-" airline {{{2
+" airline 
+
 let g:airline_theme = 'molokai'
 
 " enable/disable automatic population of the `g:airline_symbols` dictionary
@@ -116,13 +124,7 @@ let g:airline#extensions#tagbar#flags = 'f'
 " Enable iminsert detection.
 let g:airline_detect_iminsert=1
 
-" tcomment {{{2
-" Setup line comment for .c files
-let g:tcommentLineC = {
-            \ 'commentstring': '// %s',
-            \ }
-
-" project {{{2
+" project 
 " i - Display the filename and the current working directory in the command
 "     line when a file is selected for opening.
 " m - Turn on the mapping of the CTRL-W_o and CTRL-W_CTRL_O normal mode
@@ -139,7 +141,7 @@ let g:tcommentLineC = {
 
 let g:proj_flags='imsSgtc'
 
-" tagbar {{{2
+" tagbar 
 " Automatically close tagbar window when a jump is made to a tag
 let g:tagbar_autoclose = 1
 " Move the cursor to the tagbar window after it is opened
@@ -153,19 +155,19 @@ let g:tagbar_foldlevel = 99
 " Set the width of the tagbar window
 let g:tagbar_width = 60
 
-" ctrlp {{{2
+" ctrlp 
 " Show the match window on top, order of matches: top to bottom
 " minimum match window height: 1, maximum match window height: 30
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30'
 " Use a tag extension
 let g:ctrlp_extensions = ['tag']
 
-" Ack {{{2
+" Ack 
 " Configure Ack to use ag, the sliver searcher.
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " let g:ackprg = 'ack-grep -s -H --nocolor --nogroup --column'
 
-" YouCompleteMe {{{2
+" YouCompleteMe 
 " 0 - disable diagnositcs us
 " 1 - enable diagnositcs us
 " let g:ycm_show_diagnostics_ui = 1
@@ -174,6 +176,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " if it is safe to be loaded. This is to prevent execution of malicious code from
 " a '.ycm_extra_conf.py' file you didn't write
 let g:ycm_confirm_extra_conf = 0
+
+let g:ycm_key_list_select_completion = ['<C-j>']
+let g:ycm_key_list_previous_completion = ['<C-k>']
 
 " When this option is set to '1', YCM's identifier completer will also collect
 " identifiers from tags files. The list of tags files to examine is retrieved
@@ -189,9 +194,9 @@ let g:ycm_enable_diagnostic_highlighting = 0
 " Do not enable diagnostic highlighting
 let g:ycm_server_keep_logfiles = 1
 
-" Section: Options {{{1
+" Section: Options 
 
-let mapleader=","
+let mapleader="\<Space>"
 
 set cscopeprg=gtags-cscope
 
@@ -228,11 +233,7 @@ set showbreak=…
 " screen.
 set linebreak
 " Set the font
-if has('win32') || has('win64')
-  set guifont=Powerline_Consolas:h9:b:cANSI
-elseif has("gui_gtk2")
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
-endif
+set guifont=Sauce\ Code\ Powerline:h12
 
 " Remove Menu from GUI
 set guioptions-=m
@@ -321,7 +322,7 @@ set tabstop=2 softtabstop=2 shiftwidth=2
 " appropriate number of spaces.
 retab
 
-" Section: Autocommands {{{1
+" Section: Autocommands 
 if has("autocmd")
   augroup mygroup
     " Remove ALL autocommands for the current group.
@@ -348,14 +349,14 @@ if has("autocmd")
     " As Vim creates the quickfix list, it adds a buffer for each file. That
     " autocommand executes :cd to the current working directory for each file
     " added and causes the file names to be resolved (from full path to
-    " relative). Executing :cd like that is a no-op in this case case.
+    " relative). Executing :cd like that is a no-op in this case.
     autocmd BufAdd * execute 'cd' fnameescape(getcwd())
 
   augroup END
 
 endif
 
-" Section: Mappings {{{1
+" Section: Mappings 
 " Remap redraw to Alt-l
 nnoremap <A-l> <C-l>
 
