@@ -39,8 +39,6 @@ Plugin 'kana/vim-textobj-user.git'
 Plugin 'kana/vim-textobj-line.git'
 " Vim plugin for copying to the system clipboard with text-objects and motions
 Plugin 'christoomey/vim-system-copy.git'
-" Syntax highlighting for LLVM
-Plugin 'Superbil/llvm.vim.git', {'name': 'llvm-syn-hl'}
 " L9 library
 Plugin 'eparreno/vim-l9'
 " Better status line
@@ -93,6 +91,9 @@ Plugin 'godlygeek/tabular.git', {'name': 'tabular'}
 Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
 " Code snippets
 Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
+" Insert or delete brackets, parens, quotes in pair.
+Plugin 'jiangmiao/auto-pairs.git'
+
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
@@ -193,6 +194,9 @@ let g:ycm_enable_diagnostic_highlighting = 0
 
 " Do not enable diagnostic highlighting
 let g:ycm_server_keep_logfiles = 1
+
+" Show completion suggestions in comments
+let g:ycm_complete_in_comments = 1
 
 " Section: Options 
 
