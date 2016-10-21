@@ -96,7 +96,7 @@ Plugin 'scrooloose/syntastic.git'
 " Help edit XML files
 Plugin 'sukima/xmledit.git'
 " Improvements to the handling of Django related files in Vim
-Plugin 'tweekmonster/django-plus.vim.git'
+Plugin 'tweekmonster/django-plus.vim.git', {'name': 'django_plus'}
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
