@@ -9,7 +9,7 @@
 " 3. shiftwidth - Number of spaces to use for each step of (auto)indent.
 "      Used for 'cindent', >>, <<, etc.
 " 4. expandtab - Convert tabs to spaces.
-setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 " Enable automatic C program indenting.
 setlocal autoindent

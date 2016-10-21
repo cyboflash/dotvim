@@ -1,6 +1,4 @@
-﻿" vim: foldmethod=marker foldcolumn=4
-
-" Section: Must be done first 
+﻿" Section: Must be done first 
 " Set the VIM directory based on if it is Windows or other system.
 let $VIMHOME = $HOME.'/.vim'
 if has('win32') || has('win64')
@@ -62,7 +60,7 @@ Plugin 'majutsushi/tagbar'
 " An extensible & universal commenting plugin that also handles embedded file types
 Plugin 'tomtom/tcomment_vim'
 " Start a * or # search from a visual block
-Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'bronson/vim-visual-star-search.git'
 " Maintains a history of previous yanks, changes and deletes
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 " Vim syntax highlighting for c, bison, flex
@@ -93,7 +91,12 @@ Plugin 'tommcdo/vim-exchange.git', {'name': 'vim-exchange'}
 Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
 " Insert or delete brackets, parens, quotes in pair.
 Plugin 'jiangmiao/auto-pairs.git'
-
+" Syntax checking
+Plugin 'scrooloose/syntastic.git'
+" Help edit XML files
+Plugin 'sukima/xmledit.git'
+" Improvements to the handling of Django related files in Vim
+Plugin 'tweekmonster/django-plus.vim.git'
 
 " ATTENTION: All of the plugins must be added before the following line
 call vundle#end()
@@ -103,13 +106,47 @@ filetype plugin indent on
 
 " Section: Plugin Setup 
 " fontsize 
+let g:syntastic_python_checkers = ["pep8", "python"]
+
+" fontsize 
 let g:fontsize#defaultSize = 13
 let g:fontsize#timeout = 0
 
 " UltiSnips 
-let g:UltiSnipsExpandTrigger="<C-h>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+
+" YouCompleteMe 
+" 0 - disable diagnositcs us
+" 1 - enable diagnositcs us
+" let g:ycm_show_diagnostics_ui = 1
+
+" Ask once per '.ycm_extra_conf.py' file
+" if it is safe to be loaded. This is to prevent execution of malicious code from
+" a '.ycm_extra_conf.py' file you didn't write
+let g:ycm_confirm_extra_conf = 0
+
+let g:ycm_key_list_select_completion = ['<C-j>']
+let g:ycm_key_list_previous_completion = ['<C-k>']
+
+" When this option is set to '1', YCM's identifier completer will also collect
+" identifiers from tags files. The list of tags files to examine is retrieved
+" from the 'tagfiles()' Vim function which examines the 'tags' Vim option.
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+" Show completion suggestions in comments
+let g:ycm_complete_in_comments = 1
+
+" Do not show diagnostic signs
+let g:ycm_enable_diagnostic_signs = 0
+
+" Do not enable diagnostic highlighting
+let g:ycm_enable_diagnostic_highlighting = 0
+
+" Do not enable diagnostic highlighting
+let g:ycm_server_keep_logfiles = 1
+
 
 " airline 
 
@@ -168,35 +205,6 @@ let g:ctrlp_extensions = ['tag']
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " let g:ackprg = 'ack-grep -s -H --nocolor --nogroup --column'
 
-" YouCompleteMe 
-" 0 - disable diagnositcs us
-" 1 - enable diagnositcs us
-" let g:ycm_show_diagnostics_ui = 1
-
-" Ask once per '.ycm_extra_conf.py' file
-" if it is safe to be loaded. This is to prevent execution of malicious code from
-" a '.ycm_extra_conf.py' file you didn't write
-let g:ycm_confirm_extra_conf = 0
-
-let g:ycm_key_list_select_completion = ['<C-j>']
-let g:ycm_key_list_previous_completion = ['<C-k>']
-
-" When this option is set to '1', YCM's identifier completer will also collect
-" identifiers from tags files. The list of tags files to examine is retrieved
-" from the 'tagfiles()' Vim function which examines the 'tags' Vim option.
-let g:ycm_collect_identifiers_from_tags_files = 1
-
-" Do not show diagnostic signs
-let g:ycm_enable_diagnostic_signs = 0
-
-" Do not enable diagnostic highlighting
-let g:ycm_enable_diagnostic_highlighting = 0
-
-" Do not enable diagnostic highlighting
-let g:ycm_server_keep_logfiles = 1
-
-" Show completion suggestions in comments
-let g:ycm_complete_in_comments = 1
 
 " Section: Options 
 
