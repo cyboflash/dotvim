@@ -1,0 +1,18 @@
+snippet try "try/except"
+try:
+	${1:try-code}
+except (${2:exception-list}) as ${3:err}:
+	${4:excpetion-code}
+else:
+	${5:else-code}$0
+endsnippet
+
+snippet def "function"
+def ${1:function}(${2:arg}):
+	${3:code}$0
+endsnippet
+
+snippet class "class"
+class ${1:MyClass}(${2:parent}):
+	${3:code}$0
+endsnippet

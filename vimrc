@@ -116,6 +116,7 @@ let g:fontsize#timeout = 0
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsSnippetsDir=$VIMHOME.'/UltiSnips'
 
 " YouCompleteMe 
 " 0 - disable diagnositcs us
