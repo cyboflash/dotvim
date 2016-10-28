@@ -246,7 +246,11 @@ set showbreak=…
 " screen.
 set linebreak
 " Set the font
-set guifont=Sauce\ Code\ Powerline:h12
+if has('win32') || has('win64')
+  set guifont=Sauce\ Code\ Powerline:h9
+else
+  set guifont=Sauce\ Code\ Powerline:h12
+endif
 
 " Remove Menu from GUI
 set guioptions-=m

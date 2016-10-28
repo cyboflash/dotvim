@@ -22,12 +22,32 @@ cd /d %VIMSRC%
 REM --- Build GUI version (gvim.exe) ---
 echo Building gvim.exe ...
 REM The following command will compile with both Python 2.7 and Python 3.3
-mingw32-make.exe -f Make_ming.mak PYTHON="C:/Python27" PYTHON_VER=27 DYNAMIC_PYTHON=yes PYTHON3="C:/Python35" PYTHON3_VER=35 DYNAMIC_PYTHON3=yes FEATURES=HUGE GUI=yes ARCH=%ARCH% gvim.exe "%LOGFILE%" 2>&1
+mingw32-make.exe -f Make_ming.mak ^
+  PYTHON="C:\Python27" ^
+  PYTHON_VER=27 ^
+  DYNAMIC_PYTHON=yes ^
+  PYTHON3="C:\Python35"^
+  PYTHON3_VER=35 ^
+  DYNAMIC_PYTHON3=yes ^
+  FEATURES=HUGE ^
+  GUI=yes ^
+  ARCH=%ARCH% ^
+  gvim.exe "%LOGFILE%" 2>&1
 
 REM --- Build console version (vim.exe) ---
 echo Building vim.exe ...
 REM The following command will compile with both Python 2.7 and Python 3.3
-mingw32-make.exe -f Make_ming.mak PYTHON="C:/Python27" PYTHON_VER=27 DYNAMIC_PYTHON=yes PYTHON3="C:/Python35" PYTHON3_VER=35 DYNAMIC_PYTHON3=yes FEATURES=HUGE GUI=no vim.exe ARCH=%ARCH% 2>&1 >> "%LOGFILE%" 2>&1
+mingw32-make.exe -f Make_ming.mak ^
+  PYTHON="C:\Python27" ^
+  PYTHON_VER=27 ^
+  DYNAMIC_PYTHON=yes ^
+  PYTHON3="C:\Python35" ^
+  PYTHON3_VER=35 ^
+  DYNAMIC_PYTHON3=yes ^
+  FEATURES=HUGE ^
+  GUI=no ^
+  ARCH=%ARCH% ^
+  vim.exe >> "%LOGFILE%" 2>&1
 
 echo Moving files ...
 move gvim.exe "%WORKDIR%"
