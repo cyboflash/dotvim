@@ -60,7 +60,7 @@ Plugin 'majutsushi/tagbar'
 " An extensible & universal commenting plugin that also handles embedded file types
 Plugin 'tomtom/tcomment_vim'
 " Start a * or # search from a visual block
-Plugin 'bronson/vim-visual-star-search.git'
+" Plugin 'bronson/vim-visual-star-search.git'
 " Maintains a history of previous yanks, changes and deletes
 Plugin 'vim-scripts/YankRing.vim', {'name': 'yankring'}
 " Vim syntax highlighting for c, bison, flex
@@ -105,8 +105,8 @@ call vundle#end()
 filetype plugin indent on
 
 " Section: Plugin Setup 
-" fontsize 
-let g:syntastic_python_checkers = ["pep8", "python"]
+" Syntastic
+let g:syntastic_python_checkers = ['python']
 
 " fontsize 
 let g:fontsize#defaultSize = 13
@@ -208,6 +208,11 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 
 " Section: Options 
+ 
+" r - Automatically insert the current comment leader after hitting
+"     <Enter> in Insert mode.
+" j - Where it makes sense, remove a comment leader when joining lines
+set formatoptions+=rj
 
 let mapleader="\<Space>"
 
@@ -392,6 +397,7 @@ nnoremap <leader>l :set list!<cr>
 nnoremap <silent><F8> :nohlsearch<cr>
 
 nnoremap <leader>vv :vsp<cr>
+nnoremap <leader>ss :sp<cr>
 
 " Toggle the Tlist window using <F4>
 nnoremap <silent><F4> :TagbarToggle<cr>
@@ -412,7 +418,7 @@ nnoremap <silent><C-F9> :lprev<cr>zz
 nnoremap <silent><C-F10> :lnext<cr>zz
 nnoremap <silent><M-F9> :cfirst<cr>
 nnoremap <silent><M-F10> :clast<cr>
-nnoremap <silent><leader>mm :set lines=999 columns=999<cr>
+nnoremap <silent><leader>mm :set lines=10000 columns=1000<cr>
 nnoremap <silent><leader>mn :set lines=999 columns=90<cr>
 
 nnoremap <silent><F6> :YRShow<CR>
