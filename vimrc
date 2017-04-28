@@ -93,8 +93,6 @@ Plugin 'SirVer/ultisnips.git', {'name': 'ultisnips'}
 Plugin 'jiangmiao/auto-pairs.git'
 " Syntax checking
 Plugin 'scrooloose/syntastic.git'
-" Help edit XML files
-Plugin 'sukima/xmledit.git'
 " Improvements to the handling of Django related files in Vim
 Plugin 'tweekmonster/django-plus.vim.git', {'name': 'django_plus'}
 
@@ -103,6 +101,9 @@ call vundle#end()
 
 " Required: enable plugins and indentation based on the file type.
 filetype plugin indent on
+
+" start using matching plugin
+packadd! matchit
 
 " Section: Plugin Setup 
 " Syntastic
@@ -329,7 +330,7 @@ set cscopeverbose
 " shiftwidth - Number of spaces to use for each step of (auto)indent.
 "   Used for 'cindent', >>, <<, etc.
 " expandtab - Convert tabs to spaces.
-set tabstop=2 softtabstop=2 shiftwidth=2
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
 " Replace all sequences of white-space containing a
 " <Tab> with new strings of white-space using the new
