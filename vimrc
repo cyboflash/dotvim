@@ -253,9 +253,9 @@ set showbreak=…
 set linebreak
 " Set the font
 if has('win32') || has('win64')
-  set guifont=Sauce\ Code\ Powerline:h9
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h9
 else
-  set guifont=Sauce\ Code\ Powerline:h12
+  set guifont=Source\ Code\ Pro\ for\ Powerline\ 9
 endif
 
 " Remove Menu from GUI
